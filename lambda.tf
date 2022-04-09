@@ -2,7 +2,7 @@
 # Lambda Function - Cognito
 # ----------------------------------------------------------------------------------------------
 resource "aws_lambda_function" "webhook" {
-  function_name    = "teams-webhook"
+  function_name    = var.function_name
   handler          = "index.handler"
   filename         = data.archive_file.lambda_webhook.output_path
   source_code_hash = data.archive_file.lambda_webhook.output_sha
@@ -10,7 +10,7 @@ resource "aws_lambda_function" "webhook" {
   role             = aws_iam_role.webhook.arn
   runtime          = "nodejs14.x"
   timeout          = 10
-  
+
   environment {
     variables = {
       WEBHOOK_URL = var.webhook_url
